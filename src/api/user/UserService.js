@@ -6,7 +6,7 @@ export default class UserService {
   }
 
   getAllUsers() {
-    return this._User.findAll();
+    return this._User.find();
   }
 
   getUserById(id) {

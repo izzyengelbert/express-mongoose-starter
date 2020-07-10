@@ -28,7 +28,8 @@
     "http-errors": "^1.7.3",
     "http-status-codes": "^1.4.0",
     "jsonwebtoken": "^8.5.1",
-    "mongoose": "^5.9.13"
+    "mongoose": "^5.9.13",
+    "morgan": "^1.10.0"
   },
   "devDependencies": {
     "@babel/core": "^7.9.6",

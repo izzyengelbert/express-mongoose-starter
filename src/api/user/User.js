@@ -37,7 +37,6 @@ const UserSchema = new Schema({
 
 class User {
   static init(db) {
-    UserSchema.loadClass(this);
     return db.model('User', UserSchema);
   }
 

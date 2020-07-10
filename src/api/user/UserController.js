@@ -16,8 +16,8 @@ export default class UserController {
 
   registerRoutes() {
     this._app.use('/users', this._router);
-    this._router.get('/', authenticate, validation(userSchema, 'query'), handleError(this._getUsers));
-    this._router.get('/:id', authenticate, validation(userSchema, 'params'), handleError(this._getUserById));
+    this._router.get('/', validation(userSchema.query, 'query'), handleError(this._getUsers));
+    this._router.get('/:id', authenticate, validation(userSchema.parameter, 'params'), handleError(this._getUserById));
   }
 
   async _getUsers(req, res) {

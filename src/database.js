@@ -14,7 +14,7 @@ const connect = (options) => {
     password
   } = options;
   if (!mongoose) {
-    let connectionUrl = `mongodb://${username}:${password}@${dbHost}:${dbPort}/${name}`;
+    let connectionUrl = `mongodb://${username}:${password}@${dbHost}:${dbPort}/${name}?authSource=admin`;
     if (dbUrl !== '') {
       connectionUrl = dbUrl;
     }

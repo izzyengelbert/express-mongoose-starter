@@ -1,10 +1,10 @@
 import Joi from '@hapi/joi';
 
 const userSchema = {
-  parameter: Joi.object().keys({
+  parameter: Joi.object({
     id: Joi.number().required()
   }),
-  query: Joi.object().keys({
+  query: Joi.object({
     username: Joi.string().min(12).max(20)
   })
 };

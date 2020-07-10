@@ -1,6 +1,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import morgan from 'morgan';
 
 import database from './database';
 import config from '../config/index';
@@ -17,7 +18,10 @@ import AuthService from './api/auth/AuthService';
 const app = express();
 const db = database.connect(config.db);
 
-app.use(cors);
+app.use(cors());
+// Example custom logger
+// app.use(morgan(':method :url :status :res[content-length] - :response-time ms'));
+app.use(morgan('tiny'));
 
 const createModels = () => ({
   User: User.init(db)
