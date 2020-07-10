@@ -1,6 +1,6 @@
 {
   "name": "express-mongoose-boilerplate",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "description": "a boilerplate for express project using mongoose",
   "main": "index.js",
   "scripts": {
