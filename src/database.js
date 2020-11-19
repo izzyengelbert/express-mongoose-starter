@@ -15,11 +15,12 @@ const connect = (options) => {
   } = options;
   if (!mongoose) {
     let connectionUrl = `mongodb://${username}:${password}@${dbHost}:${dbPort}/${name}?authSource=admin`;
-    if (dbUrl !== '') {
+    if (dbUrl && dbUrl !== '') {
       connectionUrl = dbUrl;
     }
-    Mongoose.connect(connectionUrl, { useNewUrlParser: true });
+    Mongoose.connect(connectionUrl, { useNewUrlParser: true, useUnifiedTopology: true });
     mongoose = Mongoose.connection;
+    Mongoose.set('debug', true);
   }
 
   return mongoose;

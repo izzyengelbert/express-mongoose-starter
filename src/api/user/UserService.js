@@ -1,4 +1,5 @@
 import UserNotFoundError from '../../errors/user/UserNotFoundError';
+import { hashPassword } from '../../../utils/hashPassword';
 
 export default class UserService {
   constructor(models) {
@@ -31,5 +32,14 @@ export default class UserService {
       throw new UserNotFoundError();
     }
     return user;
+  }
+
+  async createUser(payload) {
+    const userData = { ...payload };
+    userData.password = await hashPassword(payload.password);
+    const user = new this._User(userData);
+
+    const result = await user.save();
+    return result;
   }
 }

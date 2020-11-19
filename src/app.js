@@ -16,7 +16,11 @@ import UserService from './api/user/UserService';
 import AuthService from './api/auth/AuthService';
 
 const app = express();
-const db = database.connect(config.db);
+try {
+  database.connect(config.db);
+} catch (e) {
+  console.error(e);
+}
 
 app.use(cors());
 // Example custom logger
@@ -24,7 +28,7 @@ app.use(cors());
 app.use(morgan('tiny'));
 
 const createModels = () => ({
-  User: User.init(db)
+  User
 });
 
 const createServices = (models) => ({

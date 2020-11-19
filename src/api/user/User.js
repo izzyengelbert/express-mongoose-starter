@@ -1,6 +1,6 @@
-import { Schema } from 'mongoose';
+import Mongoose from 'mongoose';
 
-const UserSchema = new Schema({
+const UserSchema = new Mongoose.Schema({
   name: {
     type: String,
     required: true
@@ -35,13 +35,10 @@ const UserSchema = new Schema({
   }
 });
 
-class User {
-  static init(db) {
-    return db.model('User', UserSchema);
-  }
-
-  static findUserByCredentials(username, hashedPassword) {
-    return this.findOne({ username, password: hashedPassword });
+class UserClass {
+  static findUserByCredentials(username) {
+    const attributes = 'name username email phoneNumber updated password';
+    return this.findOne({ $or: [{ username }, { email: username }] }).select(attributes).lean();
   }
 
   static findUserById(id) {
@@ -52,5 +49,7 @@ class User {
     return this.findOne({ username });
   }
 }
+UserSchema.loadClass(UserClass);
+const User = Mongoose.model('User', UserSchema);
 
 export default User;

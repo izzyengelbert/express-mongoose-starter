@@ -6,7 +6,9 @@ const AUTH_HEADER = 'Authorization';
 
 const authenticate = async (req, res, next) => {
   try {
-    const authToken = req.get(AUTH_HEADER);
+    const authorizationHeader = req.get(AUTH_HEADER).split(' ');
+    if (authorizationHeader[0] !== 'Bearer') next(new createError.Unauthorized());
+    const authToken = authorizationHeader[1];
     const decodedToken = jwt.verify(authToken, config.default.secret);
     if (decodedToken.user) {
       req.user = decodedToken.user;

@@ -1,6 +1,6 @@
 import jwt from 'jsonwebtoken';
 import config from '../../../config/index';
-import hashPassword from '../../../utils/hashPassword';
+import { validatePassword } from '../../../utils/hashPassword';
 import IncorrectCredentials from '../../errors/user/IncorrectCredentials';
 
 export default class AuthService {
@@ -9,10 +9,11 @@ export default class AuthService {
   }
 
   async authenticateUser(username, password) {
-    const hashedPassword = hashPassword(password);
-    const user = await this._User.findUserByCredentials(username, hashedPassword);
-    if (user) {
-      const payload = { user };
+    const user = await this._User.findUserByCredentials(username);
+    const { password: userPassword, ...userData } = user;
+    const validPassword = await validatePassword(password, userPassword);
+    if (user && validPassword) {
+      const payload = { user: userData };
       const response = {
         token: jwt.sign(payload, config.secret, { expiresIn: '1h' }),
         userId: user.id,

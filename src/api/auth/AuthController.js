@@ -1,5 +1,7 @@
 import express from 'express';
 import handleError from '../../middlewares/handleError';
+import validation from '../../middlewares/validation';
+import authSchema from './schema/authSchema';
 
 class AuthController {
   constructor(app) {
@@ -11,7 +13,7 @@ class AuthController {
 
   registerRoutes() {
     this._app.use('/auth', this._router);
-    this._router.post('/', handleError(this._authenticate));
+    this._router.post('/authenticate', validation(authSchema.body, 'body'), handleError(this._authenticate));
   }
 
   async _authenticate(req, res) {
